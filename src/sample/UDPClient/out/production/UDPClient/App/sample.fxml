@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.Controller">
+   <children>
+      <Button fx:id="bntServer" layoutX="33.0" layoutY="24.0" mnemonicParsing="false" onAction="#ConServer" text="เชื่อม Server" />
+      <Button layoutX="110.0" layoutY="79.0" mnemonicParsing="false" onAction="#Push" prefHeight="54.0" prefWidth="87.0" text="+" />
+      <Label layoutX="224.0" layoutY="95.0" text="Count" />
+      <Label fx:id="labnum" layoutX="284.0" layoutY="96.0" text="0" />
+   </children>
+</Pane>

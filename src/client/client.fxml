@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Client">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="250.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints prefHeight="50.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+          <RowConstraints prefHeight="50.0" valignment="TOP" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="User">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="5.0" />
+               </GridPane.margin>
+            </Label>
+            <Label text="Pass" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="5.0" top="5.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="user" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="40.0" />
+               </GridPane.margin>
+            </TextField>
+            <Button fx:id="loginButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#login" prefWidth="80.0" text="Login" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="6.0" left="10.0" />
+               </GridPane.margin>
+            </Button>
+            <PasswordField fx:id="pass" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="40.0" />
+               </GridPane.margin>
+            </PasswordField>
+         </children>
+      </GridPane>
+      <TableView fx:id="productTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+        <columns>
+          <TableColumn prefWidth="299.0" text="Your Contents" />
+        </columns>
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </TableView>
+      <GridPane GridPane.rowIndex="2">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+      <GridPane GridPane.columnIndex="1">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Find Product">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="5.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="browse" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="75.0" />
+               </GridPane.margin>
+            </TextField>
+            <Button fx:id="browseButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#browse" prefWidth="60.0" text="Browse">
+               <GridPane.margin>
+                  <Insets bottom="6.0" left="230.0" />
+               </GridPane.margin>
+            </Button>
+            <Label fx:id="productLabel" text="-" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </Label>
+         </children>
+      </GridPane>
+      <Label text="Your Balance" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </Label>
+      <Label fx:id="balanceLabel" text="0" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="80.0" />
+         </GridPane.margin>
+      </Label>
+      <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="redeemCoin" promptText="xxxx-xxxx-xxxx-xxxx" />
+            <Button fx:id="redeemCoinButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#redeemCoin" prefWidth="100.0" text="Redeem Coin" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <Button fx:id="buyButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buy" prefWidth="80.0" text="Buy" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets bottom="215.0" left="210.0" />
+         </GridPane.margin>
+      </Button>
+   </children>
+</GridPane>
