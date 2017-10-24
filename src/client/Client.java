@@ -73,8 +73,8 @@ public class Client {
             DataInputStream in = new DataInputStream(inFromServer);
 
             String response = in.readUTF();
-            currentUser = user;
             if ("LOGIN OK".equals(response)) {
+                this.currentUser = user;
                 this.user.setText("");
                 this.pass.setText("");
 //                loginButton.setDisable(true);
@@ -92,6 +92,7 @@ public class Client {
         DataInputStream in = new DataInputStream(inFromServer);
 
         String response = in.readUTF();
+        /** check if load ok and clear table before add items here */
         while (!".".equals(response)) {
             productTable.getItems().add(response);
 
@@ -104,17 +105,20 @@ public class Client {
 
     @FXML
     public void redeemCoin() throws IOException {
-        OutputStream outToServer = socket.getOutputStream();
-        DataOutputStream out = new DataOutputStream(outToServer);
-        out.writeUTF("REDEEM " + currentUser + redeemCoin.getText());
+        if (currentUser != null) {
+            OutputStream outToServer = socket.getOutputStream();
+            DataOutputStream out = new DataOutputStream(outToServer);
+            out.writeUTF("REDEEM " + currentUser + " " + redeemCoin.getText());
 
-        InputStream inFromServer = socket.getInputStream();
-        DataInputStream in = new DataInputStream(inFromServer);
+            InputStream inFromServer = socket.getInputStream();
+            DataInputStream in = new DataInputStream(inFromServer);
 
-        String response = in.readUTF();
-        if ("REDEEM OK".equals(response.substring(0,9))) {
-            balanceLabel.setText(Integer.parseInt(balanceLabel.getText())+Integer.parseInt(response.substring(9))+"");
-            redeemCoin.setText("");
+            String response = in.readUTF();
+            /** might change response to contain user's balance instead of coin redeemed */
+            if ("REDEEM OK".equals(response.substring(0, 9))) {
+                balanceLabel.setText((Integer.parseInt(balanceLabel.getText()) + Integer.parseInt(response.substring(10))) + "");
+                redeemCoin.setText("");
+            }
         }
     }
 
@@ -142,8 +146,28 @@ public class Client {
     }
 
     @FXML
-    public void buy() {
+    public void buy() throws IOException {
+        String productInfo = productLabel.getText();
 
+        if (currentUser != null && !"-".equals(productInfo)) {
+            String[] productInfos = productInfo.split(" ");
+            String productName = productInfos[0];
+            int productPrice = Integer.parseInt(productInfos[1]);
+
+            OutputStream outToServer = socket.getOutputStream();
+            DataOutputStream out = new DataOutputStream(outToServer);
+            out.writeUTF("BUY " + currentUser + " " + productName + " " + productPrice);
+
+            InputStream inFromServer = socket.getInputStream();
+            DataInputStream in = new DataInputStream(inFromServer);
+
+            String response = in.readUTF();
+            if ("BUY OK".equals(response)) {
+                /** might change response to contain user's balance to set balanceLabel */
+                balanceLabel.setText((Integer.parseInt(balanceLabel.getText()) - productPrice) + "");
+                loadProducts();
+            }
+        }
     }
 
 }
