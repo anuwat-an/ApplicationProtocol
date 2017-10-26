@@ -67,14 +67,15 @@ public class Client {
         if (!"".equals(user) && !"".equals(pass)) {
             OutputStream outToServer = socket.getOutputStream();
             DataOutputStream out = new DataOutputStream(outToServer);
-            out.writeUTF("LOGIN " + user + " " + pass);
+            out.writeUTF("000 LOGIN " + user + " " + pass);
 
             InputStream inFromServer = socket.getInputStream();
             DataInputStream in = new DataInputStream(inFromServer);
 
-            String response = in.readUTF();
-            if ("LOGIN OK".equals(response)) {
-                this.currentUser = user;
+            String[] response = in.readUTF().split(" ");
+            if ("001".equals(response[0])) {
+                this.currentUser = response[3];
+                this.balanceLabel.setText(response[4]);
                 this.user.setText("");
                 this.pass.setText("");
 //                loginButton.setDisable(true);
@@ -86,20 +87,25 @@ public class Client {
     private void loadProducts() throws IOException {
         OutputStream outToServer = socket.getOutputStream();
         DataOutputStream out = new DataOutputStream(outToServer);
-        out.writeUTF("LOAD " + currentUser);
+        out.writeUTF("010 LOAD " + currentUser);
 
         InputStream inFromServer = socket.getInputStream();
         DataInputStream in = new DataInputStream(inFromServer);
 
-        String response = in.readUTF();
-        /** check if load ok and clear table before add items here */
-        while (!".".equals(response)) {
-            productTable.getItems().add(response);
-
+        String[] response = in.readUTF().split(" ");
+        if ("011".equals(response[0])) {
             inFromServer = socket.getInputStream();
             in = new DataInputStream(inFromServer);
 
-            response = in.readUTF();
+            String res = in.readUTF();
+            while (!".".equals(res)) {
+                productTable.getItems().add(res);
+
+                inFromServer = socket.getInputStream();
+                in = new DataInputStream(inFromServer);
+
+                res = in.readUTF();
+            }
         }
     }
 
@@ -108,15 +114,14 @@ public class Client {
         if (currentUser != null) {
             OutputStream outToServer = socket.getOutputStream();
             DataOutputStream out = new DataOutputStream(outToServer);
-            out.writeUTF("REDEEM " + currentUser + " " + redeemCoin.getText());
+            out.writeUTF("020 REDEEM " + currentUser + " " + redeemCoin.getText());
 
             InputStream inFromServer = socket.getInputStream();
             DataInputStream in = new DataInputStream(inFromServer);
 
-            String response = in.readUTF();
-            /** might change response to contain user's balance instead of coin redeemed */
-            if ("REDEEM OK".equals(response.substring(0, 9))) {
-                balanceLabel.setText((Integer.parseInt(balanceLabel.getText()) + Integer.parseInt(response.substring(10))) + "");
+            String[] response = in.readUTF().split(" ");
+            if ("021".equals(response[0])) {
+                balanceLabel.setText(response[3]);
                 redeemCoin.setText("");
             }
         }
@@ -129,18 +134,15 @@ public class Client {
         if (!"".equals(browse)) {
             OutputStream outToServer = socket.getOutputStream();
             DataOutputStream out = new DataOutputStream(outToServer);
-            out.writeUTF("BROWSE " + browse);
+            out.writeUTF("030 BROWSE " + browse);
 
             InputStream inFromServer = socket.getInputStream();
             DataInputStream in = new DataInputStream(inFromServer);
 
-            String response = in.readUTF();
-            if ("BROWSE OK".equals(response)) {
-                inFromServer = socket.getInputStream();
-                in = new DataInputStream(inFromServer);
-
-                response = in.readUTF();
-                productLabel.setText(response);
+            String[] response = in.readUTF().split(" ");
+            if ("031".equals(response[0])) {
+                String productInfo = response[3] + " " + response[4] + " Coin.";
+                productLabel.setText(productInfo);
             }
         }
     }
@@ -156,16 +158,15 @@ public class Client {
 
             OutputStream outToServer = socket.getOutputStream();
             DataOutputStream out = new DataOutputStream(outToServer);
-            out.writeUTF("BUY " + currentUser + " " + productName + " " + productPrice);
+            out.writeUTF("040 BUY " + currentUser + " " + productName + " " + productPrice);
 
             InputStream inFromServer = socket.getInputStream();
             DataInputStream in = new DataInputStream(inFromServer);
 
-            String response = in.readUTF();
-            if ("BUY OK".equals(response)) {
-                /** might change response to contain user's balance to set balanceLabel */
-                balanceLabel.setText((Integer.parseInt(balanceLabel.getText()) - productPrice) + "");
-                loadProducts();
+            String[] response = in.readUTF().split(" ");
+            if ("041".equals(response[0])) {
+                balanceLabel.setText(response[3]);
+                productTable.getItems().add(productName);
             }
         }
     }

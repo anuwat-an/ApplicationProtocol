@@ -16,6 +16,10 @@ public class User {
         this.contents = new ArrayList<>();
     }
 
+    public boolean checkUser(String user, String pass) {
+        return this.user.equalsIgnoreCase(user) && this.pass.equals(pass);
+    }
+
     public String getUser() {
         return user;
     }
@@ -42,11 +46,11 @@ public class User {
             this.balance -= balance;
     }
 
-    public ArrayList<String> getContents() {
-        return contents;
-    }
-
     public void addContent(String content) {
         this.contents.add(content);
+    }
+
+    public ArrayList<String> getContents() {
+        return contents;
     }
 }

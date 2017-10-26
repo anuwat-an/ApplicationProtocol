@@ -12,9 +12,9 @@ public class Server extends Thread {
     private int port = 5000;
     private ServerSocket serverSocket;
 
-    private ArrayList<User> users = new ArrayList<>();
-    private Map<String, String> products = new HashMap<>();
-    private Map<String, String> redeemCodes = new HashMap<>();
+    static ArrayList<User> users = new ArrayList<>();
+    static Map<String, String> products = new HashMap<>();
+    static Map<String, String> redeemCodes = new HashMap<>();
 //    private ArrayList<Thread> clients = new ArrayList<>();
 
     public Server() throws IOException {
@@ -22,8 +22,27 @@ public class Server extends Thread {
         serverSocket.setSoTimeout(600000);
 
         /** init users here */
+        User user = new User("user", "password");
+        User anuwat = new User("anuwat", "6127");
+        User test = new User("test", "test");
+        user.setBalance(8000000);
+        anuwat.setBalance(1000000);
+        test.setBalance(1000);
+
+        users.add(user);
+        users.add(anuwat);
+        users.add(test);
+
         /** init products here */
+        products.put("Deceit", "129");
+        products.put("CSGO", "315");
+        products.put("PUBG", "559");
+        products.put("The Evil Within 2", "1940");
+
         /** init redeemCodes here */
+        redeemCodes.put("xxxx-xxxx-xxxx-xxxx", "1000");
+        redeemCodes.put("aaaa-aaaa-aaaa-aaaa", "100");
+        redeemCodes.put("0000-0000-0000-0000", "100000");
     }
 
 //    private void waitForClient() throws IOException {
@@ -58,7 +77,7 @@ public class Server extends Thread {
             try {
                 Socket server = serverSocket.accept();
 
-                Thread clientService = new ServiceProvider(server, users, products, redeemCodes);
+                Thread clientService = new ServiceProvider(server);
 //                clients.add(clientService);
 
                 clientService.start();

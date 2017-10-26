@@ -14,7 +14,7 @@ public class ClientMain extends Application {
         primaryStage.setTitle("DoshVault");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.setResizable(false);
-        primaryStage.showAndWait();
+        primaryStage.show();
     }
 
 
