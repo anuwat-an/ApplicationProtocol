@@ -76,7 +76,7 @@ public class Server extends Thread {
 
     @Override
     public void run() {
-        System.out.println("Server has started.");
+        System.out.println("Server has started at port " + serverSocket.getLocalPort() + ".");
         while (true) {
             try {
                 Socket server = serverSocket.accept();

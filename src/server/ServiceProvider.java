@@ -35,6 +35,9 @@ public class ServiceProvider extends Thread {
             try {
 
                 String[] request = in.readUTF().split(" ");
+                System.out.println(socket.getLocalSocketAddress() +
+                        " Get request " + request[0] + " " + request[1] +
+                        " from " + socket.getRemoteSocketAddress());
 
                 if ("000".equals(request[0])) {
                     boolean found = false;
@@ -86,8 +89,10 @@ public class ServiceProvider extends Thread {
                     }
                 }
                 else if ("030".equals(request[0])) {
-                    if (Server.products.containsKey(request[2])) {
-                        String response = "031 BROWSE OK " + request[2] + "_" + Server.products.get(request[2]);
+                    String productName = request[2].replace("_", " ");
+
+                    if (Server.products.containsKey(productName)) {
+                        String response = "031 BROWSE OK " + request[2] + "_" + Server.products.get(productName);
 
                         out.writeUTF(response);
                     }
@@ -96,13 +101,15 @@ public class ServiceProvider extends Thread {
                     }
                 }
                 else if ("040".equals(request[0])) {
+                    String productName = request[3].replace("_", " ");
+
                     if (request[2].equals(currentUser.getUser())) {
-                        if (Server.products.containsKey(request[3])) {
-                            if (Server.products.get(request[3]).equals(request[4])) {
-                                if (!currentUser.getContents().contains(request[3])) {
+                        if (Server.products.containsKey(productName)) {
+                            if (Server.products.get(productName).equals(request[4])) {
+                                if (!currentUser.getContents().contains(productName)) {
                                     if (currentUser.getBalance() >= Integer.parseInt(request[4])) {
                                         currentUser.subBalance(Integer.parseInt(request[4]));
-                                        currentUser.addContent(request[3]);
+                                        currentUser.addContent(productName);
 
                                         out.writeUTF("041 BUY OK " + currentUser.getBalance());
                                     }

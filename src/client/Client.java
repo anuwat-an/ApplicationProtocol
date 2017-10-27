@@ -155,7 +155,7 @@ public class Client {
 
     @FXML
     public void browse() throws IOException {
-        String browse = this.browse.getText();
+        String browse = this.browse.getText().trim().replace(" ", "_");
 
         if (!"".equals(browse)) {
             out.writeUTF("030 BROWSE " + browse);
@@ -183,14 +183,17 @@ public class Client {
             if (!"-".equals(productInfo)) {
                 String[] productInfos = productInfo.split(" ");
                 String productName = productInfos[0];
-                int productPrice = Integer.parseInt(productInfos[1]);
+                for (int i=1; i<productInfos.length-2; i++) {
+                    productName += "_" + productInfos[i];
+                }
+                int productPrice = Integer.parseInt(productInfos[productInfos.length-2]);
 
                 out.writeUTF("040 BUY " + currentUser + " " + productName + " " + productPrice);
 
                 String[] response = in.readUTF().split(" ");
                 if ("041".equals(response[0])) {
                     balanceLabel.setText(response[3]);
-                    contents.appendText(productName + "\n");
+                    contents.appendText(productName.replace("_", " ") + "\n");
                 }
                 else if ("042".equals(response[0])) {
                     createAlert("Buy Error!", response[3].replace("_", " "));
