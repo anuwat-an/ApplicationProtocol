@@ -1,19 +1,25 @@
+/**
+ * Anuwat Angkuldee 5810401066
+ */
+
 package server;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 public class User {
 
     private String user;
     private String pass;
     private int balance;
-    private ArrayList<String> contents;
+    private boolean loggedin;
+    private Vector<String> contents;
 
     public User(String user, String pass) {
         this.user = user;
         this.pass = pass;
         this.balance = 0;
-        this.contents = new ArrayList<>();
+        this.loggedin = false;
+        this.contents = new Vector<>();
     }
 
     public boolean checkUser(String user, String pass) {
@@ -32,6 +38,14 @@ public class User {
         return balance;
     }
 
+    public boolean isLoggedin() {
+        return loggedin;
+    }
+
+    public Vector<String> getContents() {
+        return contents;
+    }
+
     public void setBalance(int balance) {
         this.balance = balance;
     }
@@ -46,11 +60,15 @@ public class User {
             this.balance -= balance;
     }
 
-    public void addContent(String content) {
-        this.contents.add(content);
+    public void setLoggedin(boolean loggedin) {
+        this.loggedin = loggedin;
     }
 
-    public ArrayList<String> getContents() {
-        return contents;
+    public void toggleLoggedin() {
+        this.loggedin = !this.loggedin;
+    }
+
+    public void addContent(String content) {
+        this.contents.add(content);
     }
 }

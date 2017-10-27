@@ -1,21 +1,24 @@
+/**
+ * Anuwat Angkuldee 5810401066
+ */
+
 package server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Vector;
+import java.util.Hashtable;
 
 public class Server extends Thread {
 
     private int port = 5000;
     private ServerSocket serverSocket;
 
-    static ArrayList<User> users = new ArrayList<>();
-    static Map<String, String> products = new HashMap<>();
-    static Map<String, String> redeemCodes = new HashMap<>();
-//    private ArrayList<Thread> clients = new ArrayList<>();
+    static Vector<User> users = new Vector<>();
+    static Hashtable<String, String> products = new Hashtable<>();
+    static Hashtable<String, String> redeemCodes = new Hashtable<>();
+//    private Vector<Thread> clients = new Vector<>();
 
     public Server() throws IOException {
         serverSocket = new ServerSocket(port);
@@ -73,9 +76,11 @@ public class Server extends Thread {
 
     @Override
     public void run() {
+        System.out.println("Server has started.");
         while (true) {
             try {
                 Socket server = serverSocket.accept();
+                System.out.println("Connected to " + server.getRemoteSocketAddress());
 
                 Thread clientService = new ServiceProvider(server);
 //                clients.add(clientService);
