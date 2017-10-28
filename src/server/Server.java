@@ -26,7 +26,7 @@ public class Server extends Thread {
 
         /** init users here */
         User user = new User("user", "password");
-        User anuwat = new User("anuwat", "6127");
+        User anuwat = new User("anuwat", "4102");
         User test = new User("test", "test");
         user.setBalance(8000000);
         anuwat.setBalance(1000000);

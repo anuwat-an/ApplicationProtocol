@@ -45,6 +45,7 @@ public class ServiceProvider extends Thread {
                         if (user.checkUser(request[2], request[3])) {
                             found = true;
                             if (!user.isLoggedin()) {
+                                user.setLoggedin(true);
                                 currentUser = user;
 
                                 out.writeUTF("001 LOGIN OK " + currentUser.getUser() + " " + currentUser.getBalance());
@@ -131,6 +132,21 @@ public class ServiceProvider extends Thread {
                     }
                     else {
                         out.writeUTF("042 BUY REJECT wrong_user.");
+                    }
+                }
+                else if ("090".equals(request[0])) {
+                    boolean found = false;
+                    for (User user : Server.users) {
+                        if (user.getUser().equalsIgnoreCase(request[2])) {
+                            found = true;
+                            out.writeUTF("092 REGISTER REJECT this_user_has_already_been_registered.");
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        User user = new User(request[2], request[3]);
+                        Server.users.add(user);
+                        out.writeUTF("091 REGISTER OK");
                     }
                 }
                 else if ("900".equals(request[0])) {

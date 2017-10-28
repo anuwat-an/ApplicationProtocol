@@ -27,6 +27,8 @@ public class Client {
     @FXML
     private Button loginButton;
     @FXML
+    private Button registerButton;
+    @FXML
     private TextArea contents;
     @FXML
     private Label balanceLabel;
@@ -77,6 +79,32 @@ public class Client {
 //        System.out.println("Server says " + in.readUTF());
 //        socket.close();
 //    }
+
+    @FXML
+    public void register() throws IOException {
+        String user = this.user.getText();
+        String pass = this.pass.getText();
+
+        if (!"".equals(user) && !"".equals(pass)) {
+            if (!user.contains(" ") && !pass.contains(" ")) {
+                out.writeUTF("090 REGISTER " + user + " " + pass);
+
+                String[] response = in.readUTF().split(" ");
+                if ("091".equals(response[0])) {
+                    login();
+                }
+                else if ("092".equals(response[0])) {
+                    createAlert("Register Error!", response[3].replace("_", " "));
+                }
+            }
+            else {
+                createAlert("Cannot Register", "User and Pass must not contain space(\" \")");
+            }
+        }
+        else {
+            createAlert("Invalid register data", "Please enter both user and pass.");
+        }
+    }
 
     @FXML
     public void login() throws IOException {

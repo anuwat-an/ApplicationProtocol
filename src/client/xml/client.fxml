@@ -80,6 +80,11 @@
                   <Insets bottom="6.0" left="10.0" />
                </GridPane.margin>
             </Button>
+            <Button fx:id="registerButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#register" prefWidth="80.0" text="Register" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Button>
          </children>
       </GridPane>
       <GridPane GridPane.rowIndex="1">

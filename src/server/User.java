@@ -64,9 +64,9 @@ public class User {
         this.loggedin = loggedin;
     }
 
-    public void toggleLoggedin() {
-        this.loggedin = !this.loggedin;
-    }
+//    public void toggleLoggedin() {
+//        this.loggedin = !this.loggedin;
+//    }
 
     public void addContent(String content) {
         this.contents.add(content);
